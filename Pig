@@ -1,0 +1,35 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class Pig : MonoBehaviour  //pig的控制
+{
+    public GameObject deadeffect;//死亡的粒子效果
+    public float maxspeed = 2f;
+    
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.relativeVelocity.magnitude > maxspeed)//根据bird与pig碰撞之后产生的相对速度判断是否击杀pig
+        {
+            Instantiate(deadeffect, transform.position, transform.rotation);//生成死亡特效
+            Destroy(gameObject);
+        }
+        if (collision.gameObject.tag == "Finish")
+        {
+            Destroy(this);
+        }
+    }
+    
+}
