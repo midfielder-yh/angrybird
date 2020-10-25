@@ -1,0 +1,72 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Bird : MonoBehaviour
+{
+    bool onClicked = false;
+    public float maxDistance = 2f;//最大鼠标离中心点距离
+    public Transform centerPos;//中心点
+    public float releaseTime = 0.01f;//释放延迟时间
+    public static SpringJoint2D sj;
+    Rigidbody2D rg;
+
+    public LineRenderer frontLine;//前弹弓连接点
+    public LineRenderer backLine;//后弹弓连接点
+    public Transform frontBond;//前弹弓连接点坐标
+    public Transform backBond;
+    
+    void Start()
+    {
+        sj = GetComponent<SpringJoint2D>();
+        rg = GetComponent<Rigidbody2D>();
+    }
+
+    void Update()
+    {
+        if (onClicked)
+        {
+            transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);//鼠标屏幕坐标转世界坐标并赋予物体
+            transform.position = new Vector3(transform.position.x, transform.position.y, 0);//物体Z坐标赋予0，记得改相机的projection
+            PrintLine();
+
+            if (Vector3.Distance(transform.position, centerPos.position) > maxDistance)
+            {
+                Vector3 direction = (transform.position - centerPos.position).normalized * maxDistance;//求弹弓的方向
+                transform.position = centerPos.position + direction;
+                PrintLine();
+            }
+        }
+    }
+    private void OnMouseDown()
+    {
+        onClicked = true;
+        rg.isKinematic = true;//将dynamic转换成kinema
+        frontLine.enabled = true;//关闭弹弓效果
+        backLine.enabled = true;
+        sj.enabled = true;
+    }
+    private void OnMouseUp()
+    {
+        onClicked = false;
+        rg.isKinematic = false;
+        StartCoroutine(release());//协程延迟
+        frontLine.enabled = false;
+        backLine.enabled = false;
+        //Destroy(gameObject, 5f);
+
+    }
+    IEnumerator release()
+    {
+        yield return new WaitForSeconds(releaseTime);
+        sj.enabled = false;
+    }
+    void PrintLine()
+    {
+        frontLine.SetPosition(0, frontBond.position);//画弹弓的弹簧
+        frontLine.SetPosition(1, transform.position);
+        backLine.SetPosition(0, backBond.position);
+        backLine.SetPosition(1, transform.position);
+    }
+    
+}
