@@ -1,23 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using UnityEngine.UIElements;
+//using UnityEngine.UIElements;//与UI冲突
 using UnityEngine.UI;
 
 public class agbirdMenu : MonoBehaviour
 {
-    public Button openmenu;
-    public GameObject menu;
-    public Button confirm;
-    public Toggle Mute;
-    public Slider volume;
+    public Button openmenu;//打开菜单的按钮
+    public GameObject menu;//menu菜单
+    public Button confirm;//确认按钮
+    public Toggle Mute;//静音选项
+    public Slider volume;//控制声音大小滑块
     private void Awake()
     {
-        menu.SetActive(false); volume.value = 0.5f;
-        //Button openbt = openmenu.GetComponent<Button>();
+        menu.SetActive(false); 
+        volume.value = 0.5f;//初始声音大小为一半
         openmenu.onClick.AddListener(OpenMenu);
     }
-    // Update is called once per frame
+
     void Update()
     {
         confirm.onClick.AddListener(CloseMenu);
