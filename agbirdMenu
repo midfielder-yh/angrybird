@@ -1,0 +1,40 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+//using UnityEngine.UIElements;
+using UnityEngine.UI;
+
+public class agbirdMenu : MonoBehaviour
+{
+    public Button openmenu;
+    public GameObject menu;
+    public Button confirm;
+    public Toggle Mute;
+    public Slider volume;
+    private void Awake()
+    {
+        menu.SetActive(false); volume.value = 0.5f;
+        //Button openbt = openmenu.GetComponent<Button>();
+        openmenu.onClick.AddListener(OpenMenu);
+    }
+    // Update is called once per frame
+    void Update()
+    {
+        confirm.onClick.AddListener(CloseMenu);
+        if (Mute.isOn==true)
+        {
+            AudioListener.volume = 0;
+        }
+        else AudioListener.volume = volume.value;
+    }
+    void OpenMenu()
+    {
+        menu.SetActive(true);
+        Time.timeScale = 0;
+    }
+    void CloseMenu()
+    {
+        menu.SetActive(false);
+        Time.timeScale = 1;
+    }
+}
