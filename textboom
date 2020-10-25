@@ -1,0 +1,24 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class textboom : MonoBehaviour    //bird2的实验爆炸效果
+{
+    public float radius = 5.0f;//爆炸半径
+    public float power = 10.0f;//爆炸力量
+    public Transform exPos;//爆炸点
+    public float upperforce = 1.0f;//爆炸产生的向上的力
+    void Start()
+    {
+        Vector3 explosionPos = transform.position;
+        Collider[] colliders = Physics.OverlapSphere(explosionPos, radius);
+        foreach (Collider hit in colliders)//遍历爆炸波及的物体
+        {
+            Rigidbody rb = hit.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.AddExplosionForce(power, explosionPos, radius, upperforce);//只适用于3D爆炸效果
+            }
+        }
+    }
+}
