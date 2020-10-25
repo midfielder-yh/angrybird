@@ -1,0 +1,41 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Dynamic;
+using UnityEngine;
+using UnityEngine.PlayerLoop;
+
+public class Select : MonoBehaviour
+{
+    public GameObject bird1;
+    public GameObject bird;
+    public GameObject bird2;
+    public Transform bornposition;//出生点
+    int ch;
+
+    void Start()
+    {
+        ch = 1;
+        bird.SetActive(false);
+        bird1.SetActive(false);
+        bird2.SetActive(false);
+    }
+
+    void Update()
+    {
+        Change();
+    }
+    void Change()
+    {
+        if(Input.GetKeyDown("c"))//转换bird的类型
+        {
+            switch(ch)
+            {
+                case 1: bird1.SetActive(false); bird2.SetActive(false); bird.SetActive(true);bird.transform.position = bornposition.position;Bird.sj.enabled=true; ch++;break;
+                case 2: bird.SetActive(false); bird2.SetActive(false); bird1.SetActive(true); bird1.transform.position = bornposition.position; Birdone.sj1.enabled = true; ch++; 
+                        break; 
+                case 3: bird.SetActive(false); bird1.SetActive(false); bird2.SetActive(true); bird2.transform.position = bornposition.position; Bird2.sj2.enabled = true; ch =1; break;
+                    default: break;
+            }
+        }
+    }
+}
