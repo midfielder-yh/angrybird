@@ -1,6 +1,6 @@
 # angrybird
-game of angrybird
-使用unity2019.4.12f1平台   C#
+game of angrybird  使用unity2019.4.12f1平台   C#
+
 包括以下文件：
 1.bird 的控制
 2.对bird的选择控制
